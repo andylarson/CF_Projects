@@ -1,0 +1,25 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.label {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+input[type="text"] {
+	width: 200px;
+}
+.userButton {
+	text-align: center;
+}
+#errorMessage {
+	color: red;
+	font-weight: bold;
+	font-size: 16px;
+	padding-bottom: 8px;
+}
+.red {
+ color:red;
+}
