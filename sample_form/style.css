@@ -2,12 +2,10 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
-
 .label {
 	font-size: 14px;
 	font-weight: bold;
 }
-
 input[type="text"] {
 	width: 200px;
 }
@@ -21,5 +19,5 @@ input[type="text"] {
 	padding-bottom: 8px;
 }
 .red {
- color:red;
+	color:red;
 }

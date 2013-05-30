@@ -4,79 +4,79 @@ function validateForm() {
 
  		if ( $("#firstName").val().length == 0) {
 			// Check if nothing was emtered into the form
- 			$("#firstNameLabel").css('color', 'red');
+ 			$("#firstNameLabel").addClass('red');
  			err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#firstNameLabel").css('color', 'black');
+			$("#firstNameLabel").removeClass('red');
  		}
 
  		if ( $("#lastName").val().length == 0) {
 			// Check if nothing was emtered into the form
- 			$("#lastNameLabel").css('color', 'red');
+ 			$("#lastNameLabel").addClass('red');
  			err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#lastNameLabel").css('color', 'black');		
+			$("#lastNameLabel").removeClass('red');		
  		}
 
 		var phoneNumber = $("#phone").val(); // Set form value to phoneNumber
  		if ( phoneNumber.length == 0) {
 			// Check if nothing was emtered into the form
- 			$("#phoneLabel").css('color', 'red');
+ 			$("#phoneLabel").addClass('red');
  			err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#phoneLabel").css('color', 'black');	
+			$("#phoneLabel").removeClass('red');	
  		}
 		if ( !phoneNumber.match("^(([0-9]{3}-)|\([0-9]{3}\) ?)?[0-9]{3}-[0-9]{4}$") ) {
 		  // invalid email
-		  $("#phoneLabel").css('color', 'red');
+		  $("#phoneLabel").addClass('red');
 		  err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#phoneLabel").css('color', 'black');			  
+			$("#phoneLabel").removeClass('red');			  
 		}
 
 
  		var cellNumber = $("#cell").val(); // Set form value to cellNumber
  		if ( cellNumber.length == 0) {
 			// Check if nothing was emtered into the form
- 			$("#cellLabel").css('color', 'red');
+ 			$("#cellLabel").addClass('red');
  			err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#cellLabel").css('color', 'black');				
+			$("#cellLabel").removeClass('red');				
  		}
 		if ( !cellNumber.match("^(([0-9]{3}-)|\([0-9]{3}\) ?)?[0-9]{3}-[0-9]{4}$") ) {
 		  // invalid email
-		  $("#cellLabel").css('color', 'red');
+		  $("#cellLabel").addClass('red');
 		  err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#cellLabel").css('color', 'black');			  
+			$("#cellLabel").removeClass('red');			  
 		}
 
 
  		var emailAddress = $("#email").val(); // Set form value to emailAddress
  		if ( emailAddress.length == 0) {
 			// Check if nothing was emtered into the form
- 			$("#emailLabel").css('color', 'red');
+ 			$("#emailLabel").addClass('red');
  			err = 1; // set error
 		} else {
 			// Reset the color in case it was flagd red on the last submit.
-			$("#emailLabel").css('color', 'black');				
+			$("#emailLabel").removeClass('red');				
  		}
 		
 		// Validate Email address
 		if ( /^.+@.+\..+$/.test( emailAddress ) ){
 		  // valid email
 		  // Reset the color in case it was flagd red on the last submit.
-		  $("#emailLabel").css('color', 'black');
+		  $("#emailLabel").removeClass('red');
 		} else {
 		  // invalid email
 		  // Check if nothing was emtered into the form
-		  $("#emailLabel").css('color', 'red');
+		  $("#emailLabel").addClass('red');
 		  err = 1; // set error
 		}
 
