@@ -1,0 +1,856 @@
+ <!DOCTYPE HTML>
+<html>
+	<head>
+		<title>jQuery DataTables Working Example</title>
+
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="http://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+		<script type="text/javascript" src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+		<script type="text/javascript" src="http://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+		<script type="text/javascript" src="http://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="http://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<!--
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="//code.jquery.com/jquery-1.12.3.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+		<script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+		<script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+		<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+ -->
+		<style>
+			table {
+				border: 1px solid #DFDFDF;
+				width: 935px;
+				-moz-border-radius: 3px;
+				-webkit-border-radius: 3px;
+				border-radius: 3px;
+				font-family: Arial,"Bitstream Vera Sans",Helvetica,Verdana,sans-serif;
+				color: #000;
+				table-layout: fixed;
+			}
+			table a{
+				color:#000;
+				text-decoration: none;
+			}
+			table td, table th {
+				border-top-color: white;
+				color: #000;
+				text-align:left;
+				word-wrap: break-word;
+			}
+			table th {
+				text-shadow: rgba(255, 255, 255, 0.796875) 0px 1px 0px;
+				font-family: 'Titillium Web', sans-serif;
+				padding: 7px 7px 8px;
+				text-align: center;
+				line-height: 1.3em;
+				font-size: 13px;
+				background-color:#F0F0F0;
+			}
+			table td {
+				font-size: 12px;
+				padding: 4px 7px 2px;
+				vertical-align: top;
+
+			}
+			table td.rowLabel{
+				text-align:left;
+			}
+
+			td.centerCell {
+				text-align: center;
+			}
+			td.underline a {
+				text-decoration: underline;
+			}
+			table tr.odd{
+				background-color: #F5F5F5;
+			}
+			table td input {
+
+			}
+			table.highlighter tr:hover td {
+				/*background:#005288; same as below  */
+			background: rgba(0,82,136,0.05);
+			}
+			table.highlighter tr td a {
+				display: block;
+				color:#00459b;
+			}
+
+			/******************************
+					DATATABLE
+			*******************************/
+			.dataTables_wrapper .dataTables_length,
+			.dataTables_wrapper .dataTables_filter {
+			padding-bottom:8px;
+			}
+
+			.dataTables_wrapper .dataTables_info,
+			.dataTables_wrapper .dataTables_paginate {
+			padding-top:4px;
+			}
+			.dataTables_wrapper table.dataTable tbody tr.odd,
+			.dataTables_wrapper table.dataTable tbody tr.odd {
+				background-color: #FFFFFF;
+			}
+			.dataTables_wrapper table.dataTable tbody tr.even,
+			.dataTables_wrapper table.dataTable tbody tr.even {
+				background-color: #F0F0F0;
+			}
+			.dataTables_wrapper table.dataTable  thead th,
+			.dataTables_wrapper table.dataTable.compact thead th {
+				background-color: #f0f0f0;
+				font-family: "Titillium Web",sans-serif;
+				font-size: 13px;
+				line-height: 1.3em;
+				padding: 10px 7px 10px 7px;
+				text-align: center;
+				text-shadow: 0 1px 0 rgba(255, 255, 255, 0.796);
+				border: 1px solid #FFFFFF;
+			}
+
+			.dataTables_wrapper table.dataTable tbody tr td,
+			.dataTables_wrapper table.dataTable.compact tbody tr td{
+				font-size: 12px;
+				border: 1px solid #FFFFFF;
+				vertical-align: top;
+				word-wrap: break-word;
+			}
+
+			.dataTables_wrapper table.dataTable {
+				border: 1px solid #dfdfdf;
+				border-radius: 3px;
+				color: #000;
+				font-family: Arial,"Bitstream Vera Sans",Helvetica,Verdana,sans-serif;
+				max-width: 960px;
+				table-layout: fixed;
+			}
+
+
+		</style>
+
+
+	</head>
+	<body>
+		<div style="width:800px; margin:0 auto; padding-top:20px;">
+			<table id="lateInvoices" class="compact highlighter">
+				<thead>
+					<tr>
+						<th style="width:50px;">Date</th>
+						<th style="width:200px;">File Name</th>
+						<th style="width:150px;">Name</th>
+						<th style="width:50px;">Items:</th>
+						<th style="width:50px;">Matching:</th>
+						<th style="width:50px;">Active:</th>
+						<th style="width:50px;">Inventory:</th>
+						<th style="width:50px;">No inventory:</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr>
+						<td>10/02/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>09/27/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>09/19/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>09/07/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/31/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/25/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/16/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/12/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>80</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/05/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/04/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>08/02/2016</td>
+						<td>Andy Reproc.csv</td>
+						<td>Andy</td>
+						<td>
+							224
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>81</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>07/27/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>07/15/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>07/07/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>06/29/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>06/21/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>06/15/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>06/07/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>06/03/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>85</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>05/27/2016</td>
+						<td>Andy Reproc.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>86</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>05/20/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>05/13/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>05/05/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>04/27/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>04/26/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>04/21/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>04/11/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>04/06/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>99</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/30/2016</td>
+						<td>ORIG.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>100</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/28/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/25/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>102</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/18/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>103</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/11/2016</td>
+						<td>ORIG.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>103</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>03/07/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>02/28/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>02/19/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>02/11/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/31/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/28/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>104</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/21/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>105</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/19/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>104</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/12/2016</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>105</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>01/04/2016</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>103</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/28/2015</td>
+						<td>AS.csv</td>
+						<td>Andy</td>
+						<td>
+							222
+						</td>
+						<td>214</td>
+						<td></td>
+						<td>104</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/24/2015</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>94</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/17/2015</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>95</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/15/2015</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>94</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/08/2015</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+							223
+						</td>
+						<td>215</td>
+						<td></td>
+						<td>95</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>12/07/2015</td>
+						<td>Set2Zero.csv</td>
+						<td>Andy</td>
+						<td>
+
+						</td>
+						<td>104</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>11/24/2015</td>
+						<td>Andy inventory.csv</td>
+						<td>Andy</td>
+						<td>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ($('#lateInvoices').length > 0) {
+			$('#lateInvoices').DataTable({
+				"order": [[ 0, "asc" ]]
+				,"pageLength": 20
+				//everything below is for export.
+				,"dom": 'Bfrtip'
+				,"buttons": [
+					{
+						extend: 'csv',
+						title: 'Late_Invoices',
+						text: 'Export To CSV'
+					},
+					{
+						extend: 'excel',
+						title: 'Late_Invoices',
+						text: 'Export To Excel'
+					},
+					{
+						extend: 'pdf',
+						title: 'Late_Invoices',
+						text: 'Export To PDF'
+					},
+					{
+						extend: 'copy',
+						text: 'Copy Data'
+					},
+					{
+						extend: 'print',
+						text: 'Print Data'
+					}
+				]
+				,"buttons": ['copy', 'csv', 'excel', 'pdf', 'print']
+			});
+		}
+	});
+</script>
